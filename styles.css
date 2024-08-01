@@ -218,7 +218,7 @@ body {
 
 .footer-content {
     background-color: #343a40;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .progress {
@@ -227,4 +227,21 @@ body {
 
 .progress-bar {
     background-color: #28a745;
+}
+
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden; /* Para garantir que os cantos arredondados funcionem corretamente */
+}
+
+.table-rounded th, .table-rounded td {
+    border-top: 1px solid #dee2e6; /* Borda superior */
+}
+
+.table-rounded thead th {
+    border-bottom: 2px solid #dee2e6; /* Borda inferior do cabeçalho */
+}
+
+.table-rounded tbody tr:last-child td {
+    border-bottom: 0; /* Remover a borda inferior da última linha */
 }

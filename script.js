@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Simular o progresso da barra de carregamento
     let progress = 0;
     let interval = setInterval(function() {
         progress += 10;
@@ -13,7 +12,6 @@ $(document).ready(function() {
     }, 500);
 
     function loadResults() {
-        // Requisição AJAX para carregar os resultados da consulta
         $.ajax({
             url: 'load_results.php',
             method: 'GET',
@@ -25,14 +23,14 @@ $(document).ready(function() {
                 let tableBody = '';
                 results.data.forEach(function(row) {
                     tableBody += '<tr>';
-                    tableBody += '<td>' + row.cdpesfis + '</td>';
-                    tableBody += '<td>' + row.nmpesfis + '</td>';
-                    tableBody += '<td>' + row.dhnascto + '</td>';
-                    tableBody += '<td>' + row.nmpesfismae + '</td>';
-                    tableBody += '<td>' + row.tpdoctoident + '</td>';
-                    tableBody += '<td>' + row.nrdoctoident + '</td>';
-                    tableBody += '<td>' + row.cdexpedident + '</td>';
-                    tableBody += '<td>' + row.dtemissdocto + '</td>';
+                    tableBody += '<td>' + (row.cdpesfis ?? '') + '</td>';
+                    tableBody += '<td>' + (row.nmpesfis ?? '') + '</td>';
+                    tableBody += '<td>' + (row.dhnascto ?? '') + '</td>';
+                    tableBody += '<td>' + (row.nmpesfismae ?? '') + '</td>';
+                    tableBody += '<td>' + (row.tpdoctoident ?? '') + '</td>';
+                    tableBody += '<td>' + (row.nrdoctoident ?? '') + '</td>';
+                    tableBody += '<td>' + (row.cdexpedident ?? '') + '</td>';
+                    tableBody += '<td>' + (row.dtemissdocto ?? '') + '</td>';
                     tableBody += '</tr>';
                 });
                 $('#results-table-body').html(tableBody);

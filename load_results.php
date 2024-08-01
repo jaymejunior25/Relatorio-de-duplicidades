@@ -19,6 +19,7 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
         $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
+        error_log("Erro na conexão: " . $e->getMessage(), 3, 'C:\xampp\php\logs\php_error.log');
         die(json_encode(['error' => 'Erro na conexão: ' . $e->getMessage()]));
     }
 
@@ -40,8 +41,13 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
         $stmt = $pdo->query($sql);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
+        error_log("Erro na execução da consulta: " . $e->getMessage(), 3, 'C:\xampp\php\logs\php_error.log');
         die(json_encode(['error' => 'Erro na execução da consulta: ' . $e->getMessage()]));
     }
+
+    // Verificação do resultado
+    error_log(print_r($result, true), 3, 'C:\xampp\php\logs\custom_log.log');  // Windows
+    // error_log(print_r($result, true), 3, '/opt/lampp/logs/custom_log.log');  // Linux
 
     // Contar duplicidades
     $duplicidades = [];
@@ -63,8 +69,17 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
     ]);
 
     // Salvar dados no cache
+    if (!is_dir('cache')) {
+        mkdir('cache', 0777, true);
+    }
+
     file_put_contents($cacheFile, $data);
+
+    // Verificação do cache
+    error_log($data, 3, 'C:\xampp\php\logs\custom_log.log');  // Windows
+    // error_log($data, 3, '/opt/lampp/logs/custom_log.log');  // Linux
 
     // Retornar os resultados
     echo $data;
 }
+?>
